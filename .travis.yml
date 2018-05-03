@@ -1,0 +1,34 @@
+sudo: required
+dist: trusty
+language: bash
+
+services:
+- docker
+
+env: 
+  - ARCH=s390x
+  - ARCH=amd64
+ 
+install:
+  - sh ./build_environment.sh
+
+before_script:
+  - export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
+
+script:
+  - sh ./build_dockerfile.sh
+  - travis_wait 60 docker build --compress --squash -t "${REPO}-${ARCH}:${TAG}" -f Dockerfile."${ARCH}" .
+  - docker images "${REPO}-${ARCH}:${TAG}"
+  - docker run --entrypoint "uname" -t "${REPO}-${ARCH}:${TAG}" -a
+  - sh ./deploy_container.sh
+
+jobs:
+  include:
+    - stage: deploy manifest
+      env: PUBTAG=${TRAVIS_BUILD_NUMBER}
+      script: bash ./deploy_manifest.sh
+    - stage: deploy manifest latest
+      if: branch = master
+      env: PUBTAG=latest
+      script: bash ./deploy_manifest.sh
+    
