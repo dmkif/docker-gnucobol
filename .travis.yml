@@ -6,15 +6,8 @@ services:
 - docker
 
 env: 
-  - ARCH=s390x
   - ARCH=amd64
   - ARCH=i386
-  - ARCH=armhf
-  - ARCH=armel
-  - ARCH=powerpc
-  - ARCH=ppc64el
-  - ARCH=mipsel
-  - ARCH=mips
 
 install:
   - sh ./build_environment.sh
@@ -34,11 +27,13 @@ jobs:
     - stage: deploy manifest
       env:
         - PUBTAG=${TRAVIS_BUILD_NUMBER}
-        - ARCH=s390x amd64 i386 armhf armel powerpc ppc64el mipsel mips
+        - ARCH=amd64 i386
+      before_script: export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
       script: bash ./deploy_manifest.sh
     - stage: deploy manifest latest
       if: branch = master
       env:
         - PUBTAG=latest
-        - ARCH=s390x amd64 i386 armhf armel powerpc ppc64el mipsel mips
+        - ARCH=amd64 i386
+      before_script: export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
       script: bash ./deploy_manifest.sh
