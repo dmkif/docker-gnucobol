@@ -12,9 +12,6 @@ env:
 install:
   - sh ./build_environment.sh
 
-before_script:
-  - export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
-
 script:
   - sh ./build_dockerfile.sh
   - travis_wait 60 docker build --compress --squash -t "${REPO}:${ARCH}-${TAG}" -f Dockerfile."${ARCH}" .
@@ -28,12 +25,10 @@ jobs:
       env:
         - PUBTAG=${TRAVIS_BUILD_NUMBER}
         - ARCH=amd64 i386
-      before_script: export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
       script: bash ./deploy_manifest.sh
     - stage: deploy manifest latest
       if: branch = master
       env:
         - PUBTAG=latest
         - ARCH=amd64 i386
-      before_script: export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
       script: bash ./deploy_manifest.sh

@@ -17,3 +17,11 @@ sudo cp qemu-static-conf/*.conf /lib/binfmt.d/
 sudo /etc/init.d/binfmt-support restart
 sudo cat /proc/sys/fs/binfmt_misc/status
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+#Export TAG
+if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]] then 
+	export TAG="latest"
+else 
+	export TAG=$TRAVIS_BRANCH
+fi
+
