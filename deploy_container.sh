@@ -7,9 +7,6 @@ if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]
    docker tag  "$REPO:$ARCH-$TAG" "$REPO:$ARCH-$TRAVIS_BUILD_NUMBER"
    docker push "$REPO:$ARCH-$TRAVIS_BUILD_NUMBER"
 fi 
-docker tag  "$REPO:$ARCH-$TAG" "$REPO:$ARCH"
-docker push "$REPO:$ARCH"
-
 docker push "$REPO:$ARCH-$TAG"
 
 docker logout
