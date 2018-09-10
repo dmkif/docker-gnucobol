@@ -14,9 +14,8 @@ install:
 
 script:
   - sh ./build_dockerfile.sh
-  - travis_wait 60 docker build --compress --squash -t "${REPO}:${ARCH}-${TAG}" -f Dockerfile."${ARCH}" .
-  - docker images "${REPO}:${ARCH}-${TAG}"
-  - docker run --entrypoint "uname" -t "${REPO}:${ARCH}-${TAG}" -a
+  - sh ./build_dockerimage.sh
+  - sh ./test_dockerimage.sh
   - sh ./deploy_container.sh
 
 jobs:
