@@ -7,7 +7,7 @@ sudo cp -r qemu-user-static/* /usr/ -v
 #Update Docker cli to enable manifest commmand
 sudo cp /usr/bin/docker /usr/bin/docker-cli.bak
 sudo curl -fsSL https://github.com/clnperez/cli/releases/download/1.0/docker-linux-amd64 -o /usr/bin/docker
-echo "{\"experimental\":\"enabled\"}" | sudo tee /etc/docker/daemon.json
+echo "{\"experimental\":true}" | sudo tee /etc/docker/daemon.json
 sudo service docker restart
 
 #Repair binfmt-support
