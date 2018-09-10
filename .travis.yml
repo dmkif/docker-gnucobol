@@ -33,12 +33,12 @@ jobs:
   include:
     - stage: deploy manifest
       env:
-       - PUBTAG=${TRAVIS_BUILD_NUMBER}
-       - ARCH=s390x amd64 i386 armhf armel powerpc ppc64el mipsel mips
+        - PUBTAG=${TRAVIS_BUILD_NUMBER}
+        - ARCH=s390x amd64 i386 armhf armel powerpc ppc64el mipsel mips
       script: bash ./deploy_manifest.sh
     - stage: deploy manifest latest
       if: branch = master
       env:
-       - PUBTAG=latest
-       - ARCH=s390x amd64 i386 armhf armel powerpc ppc64el mipsel mips
+        - PUBTAG=latest
+        - ARCH=s390x amd64 i386 armhf armel powerpc ppc64el mipsel mips
       script: bash ./deploy_manifest.sh
