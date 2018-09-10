@@ -1,6 +1,6 @@
-FROM @@ARCH@@/debian:latest
+FROM multiarch/debian-debootstrap:@@ARCH@@-jessie-slim
 MAINTAINER Daniel Mulzer <daniel.mulzer@fau.de>
-ADD qemu-user-static/bin/qemu-@@ARCH_2@@-static /usr/bin/qemu-@@ARCH_2@@-static
+# ADD qemu-user-static/bin/qemu-@@ARCH_2@@-static /usr/bin/qemu-@@ARCH_2@@-static
 # Install packages necessary to build and run gnucobol
 USER root
 RUN apt-get update && \
