@@ -9,4 +9,4 @@ fi
 echo "Set TAG to $TAG"
 
 #Build dockerimage 
-travis_wait 60 docker build --compress --squash -t "${REPO}:${ARCH}-${TAG}" -f Dockerfile."${ARCH}" .
+docker build --compress --squash -t "${REPO}:${ARCH}-${TAG}" -f Dockerfile."${ARCH}" .

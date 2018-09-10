@@ -14,7 +14,7 @@ install:
 
 script:
   - sh ./build_dockerfile.sh
-  - sh ./build_dockerimage.sh
+  - travis_wait 60 sh ./build_dockerimage.sh
   - sh ./test_dockerimage.sh
   - sh ./deploy_container.sh
 
