@@ -8,7 +8,14 @@ services:
 env: 
   - ARCH=s390x
   - ARCH=amd64
- 
+  - ARCH=i386
+  - ARCH=armhf
+  - ARCH=armel
+  - ARCH=powerpc
+  - ARCH=ppc64el
+  - ARCH=mipsel
+  - ARCH=mips
+
 install:
   - sh ./build_environment.sh
 
@@ -25,10 +32,13 @@ script:
 jobs:
   include:
     - stage: deploy manifest
-      env: PUBTAG=${TRAVIS_BUILD_NUMBER}
+      env:
+       - PUBTAG=${TRAVIS_BUILD_NUMBER}
+       - ARCH=s390x amd64 i386 armhf armel powerpc ppc64el mipsel mips
       script: bash ./deploy_manifest.sh
     - stage: deploy manifest latest
       if: branch = master
-      env: PUBTAG=latest
+      env:
+       - PUBTAG=latest
+       - ARCH=s390x amd64 i386 armhf armel powerpc ppc64el mipsel mips
       script: bash ./deploy_manifest.sh
-    
