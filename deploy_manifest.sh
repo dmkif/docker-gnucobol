@@ -16,7 +16,7 @@ docker manifest create $manifeststring
 for platform in $ARCH
 do
 #annotate manifest with correct arch
-docker manifest annotate --arch=$platform --os=linux $manifestname $REPO:$ARCH-$TRAVIS_BUILD_NUMBER
+docker manifest annotate --arch=$platform $manifestname $REPO:$ARCH-$TRAVIS_BUILD_NUMBER
 done;
 
 docker manifest inspect "${REPO}:${PUBTAG}"
