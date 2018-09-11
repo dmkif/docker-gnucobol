@@ -1,6 +1,6 @@
 #!/bin/sh
 #Export TAG
-if [ $TRAVIS_PULL_REQUEST="false" ] && [ $TRAVIS_BRANCH="master" ] 
+if [ $TRAVIS_BRANCH="master" ] 
 then 
 	export TAG="latest"
 else 
