@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 #Export TAG
 if [ $TRAVIS_BRANCH="master" ] 
-then 
-	export TAG="latest"
-else 
+    then 
+        export TAG="latest"
+    else 
 	export TAG=$TRAVIS_BRANCH
 fi
-
+echo "Current Branch: $TRAVIS_BRANCH"
 echo "Set TAG to $TAG"
 
 #Build dockerimage 
