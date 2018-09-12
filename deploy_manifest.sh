@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #Login to DockerHub 
 echo "$DOCKER_PASSWORT" | docker login -u "$DOCKER_USER" --password-stdin
 manifestname="$REPO:$PUBTAG"
