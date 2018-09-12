@@ -17,7 +17,17 @@ docker manifest create $manifeststring
 for platform in $ARCH
 do
 #annotate manifest with correct arch
-docker manifest annotate --arch=$platform $manifestname $REPO:$platform-$TRAVIS_BUILD_NUMBER
+case $platform in
+    i386) goarch="386"
+          ;;
+    armhf) goarch="arm"
+           ;;
+    *) goarch=$platform
+       ;;
+esac
+
+   
+docker manifest annotate --arch=$goarch $manifestname $REPO:$platform-$TRAVIS_BUILD_NUMBER
 done;
 
 docker manifest inspect "${REPO}:${PUBTAG}"
