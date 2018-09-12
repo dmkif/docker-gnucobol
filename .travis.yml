@@ -23,11 +23,11 @@ jobs:
     - stage: deploy manifest
       env:
         - PUBTAG=${TRAVIS_BUILD_NUMBER}
-        - ARCH=amd64 i386
+        - ARCH="amd64 i386"
       script: bash ./deploy_manifest.sh
     - stage: deploy manifest latest
       if: branch = master
       env:
         - PUBTAG=latest
-        - ARCH=amd64 i386
+        - ARCH="amd64 i386"
       script: bash ./deploy_manifest.sh
