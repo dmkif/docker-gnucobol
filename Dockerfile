@@ -30,7 +30,7 @@ RUN apt-get update && \
 
 # download and install open-cobol for depencies (libcob >= 4.0)
 RUN apt-get update && \
-    apt-get -y install autoconf exbuild-essential && \
+    apt-get -y install autoconf build-essential && \
     curl -sLk https://sourceforge.net/projects/open-cobol/files/gnu-cobol/3.0/gnucobol-3.0-rc1.tar.gz | tar xz && \
     cd gnucobol-3.0-rc1 && ./configure --prefix=/usr && make && make install && ldconfig && cd /tmp/ && rm -rf * && \
     apt-get -y --purge autoremove build-essential && \
