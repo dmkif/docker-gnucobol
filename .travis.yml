@@ -11,7 +11,7 @@ env:
   - ARCH=armhf
   - ARCH=arm64
   - ARCH=s390x
-  - ARCH=ppc64le
+  - ARCH=ppc64el
   - ARCH=mips
   - ARCH=mipsel
 
@@ -29,11 +29,11 @@ jobs:
     - stage: deploy manifest
       env:
         - PUBTAG=${TRAVIS_BUILD_NUMBER}
-        - ARCH="amd64 i386 armhf arm64 s390x ppc64le mips mipsel"
+        - ARCH="amd64 i386 armhf arm64 s390x ppc64el mips mipsel"
       script: bash ./deploy_manifest.sh
     - stage: deploy manifest latest
       if: branch = master
       env:
         - PUBTAG=latest
-        - ARCH="amd64 i386 armhf arm64 s390x ppc64le mips mipsel"
+        - ARCH="amd64 i386 armhf arm64 s390x ppc64el mips mipsel"
       script: bash ./deploy_manifest.sh
