@@ -6,6 +6,7 @@ then
 else 
 	export TAG=$TRAVIS_BRANCH
 fi
+
 echo "Set TAG to $TAG"
 
 #Build dockerimage 
