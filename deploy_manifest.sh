@@ -6,17 +6,18 @@ manifeststring=$manifestname
 
 for platform in $ARCH
 do
+echo $platform
 #get latest image
-docker pull $REPO:$ARCH-$TRAVIS_BUILD_NUMBER
+docker pull $REPO:$platform-$TRAVIS_BUILD_NUMBER
 #build manifest
-manifeststring="$manifeststring $REPO:$ARCH-$TRAVIS_BUILD_NUMBER"
+manifeststring="$manifeststring $REPO:$platform-$TRAVIS_BUILD_NUMBER"
 done;
 
 docker manifest create $manifeststring
 for platform in $ARCH
 do
 #annotate manifest with correct arch
-docker manifest annotate --arch=$platform $manifestname $REPO:$ARCH-$TRAVIS_BUILD_NUMBER
+docker manifest annotate --arch=$platform $manifestname $REPO:$platform-$TRAVIS_BUILD_NUMBER
 done;
 
 docker manifest inspect "${REPO}:${PUBTAG}"
