@@ -15,23 +15,25 @@ WORKDIR /tmp/
 
 #download and install berkley-db in version 4.8
 RUN apt-get update && \
-    apt-get -y install autoconf build-essential && \
+    apt-get -y install build-essential && \
     curl -sLk https://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz | tar xz && \
-    cd db-4.8.30.NC/build_unix && \
+    cd db-4.8.30.NC && \
+    curl -sLk "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" > ./dist/config.sub && \
+    curl -sLk "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > ./dist/config.guess && cd build_unix && \
     ../dist/configure --enable-cxx --prefix=/usr && make install && make clean && \
     cd /tmp/ && \
     rm -rf * && \
-    apt-get -y --purge autoremove autoconf build-essential && \
+    apt-get -y --purge autoremove build-essential && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
 
 
 # download and install open-cobol for depencies (libcob >= 4.0)
 RUN apt-get update && \
-    apt-get -y install autoconf build-essential && \
+    apt-get -y install autoconf exbuild-essential && \
     curl -sLk https://sourceforge.net/projects/open-cobol/files/gnu-cobol/3.0/gnucobol-3.0-rc1.tar.gz | tar xz && \
-    cd gnucobol-3.0-rc1 && ./configure && make && make install && ldconfig && cd /tmp/ && rm -rf * && \
-    apt-get -y --purge autoremove autoconf build-essential && \
+    cd gnucobol-3.0-rc1 && ./configure --prefix=/usr && make && make install && ldconfig && cd /tmp/ && rm -rf * && \
+    apt-get -y --purge autoremove build-essential && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
 
