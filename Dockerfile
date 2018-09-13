@@ -1,10 +1,12 @@
 FROM multiarch/debian-debootstrap:@@ARCH@@-jessie-slim
 MAINTAINER Daniel Mulzer <daniel.mulzer@fau.de>
-# ADD qemu-user-static/bin/qemu-@@ARCH_2@@-static /usr/bin/qemu-@@ARCH_2@@-static
 # Install packages necessary to build and run gnucobol
 USER root
+# Install backport repository 
+RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list
+
 RUN apt-get update && \
-    apt-get -y install curl tar xterm libncurses5-dev libgmp-dev libdb-dev && \
+    apt-get -y install -t jessie-backports curl tar xterm libncurses5-dev libgmp-dev libdb-dev && \
     apt-get -y autoremove && \
     apt-get -y clean && \ 
     rm -rf /var/lib/apt/lists/*
