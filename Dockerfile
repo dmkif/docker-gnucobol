@@ -6,6 +6,7 @@ USER root
 RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list
 
 RUN apt-get update && \
+    apt-get -y upgrade -t jessie-backports && \
     apt-get -y install -t jessie-backports curl tar xterm libncurses5-dev libgmp-dev libdb-dev && \
     apt-get -y autoremove && \
     apt-get -y clean && \ 
