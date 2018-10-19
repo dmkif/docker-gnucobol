@@ -1,13 +1,11 @@
-FROM multiarch/debian-debootstrap:@@ARCH@@-jessie-slim
+FROM @@ARCH@@/debian:stable-backports
 MAINTAINER Daniel Mulzer <daniel.mulzer@fau.de>
 # Install packages necessary to build and run gnucobol
 USER root
-# Install backport repository 
-RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list
 
 RUN apt-get update && \
-    apt-get -y upgrade -t jessie-backports && \
-    apt-get -y install -t jessie-backports curl tar xterm libncurses5-dev libgmp-dev libdb-dev && \
+    apt-get -y upgrade && \
+    apt-get -y install curl tar libncurses5-dev libgmp-dev libdb-dev && \
     apt-get -y autoremove && \
     apt-get -y clean && \ 
     rm -rf /var/lib/apt/lists/*

@@ -2,11 +2,9 @@
 case $ARCH in
     i386) goarch="386" 
           ;;
-    armhf) goarch="arm"
+    arm32v7) goarch="arm"
            ;;
-    ppc64el) goarch="ppc64le"
-             ;;
-    arm64v8) goarch="aarch64"
+    arm64v8) goarch="arm64"
              ;;
     *) goarch=$ARCH
        ;;
