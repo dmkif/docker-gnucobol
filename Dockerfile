@@ -3,6 +3,8 @@ MAINTAINER Daniel Mulzer <daniel.mulzer@fau.de>
 # Install packages necessary to build and run gnucobol
 USER root
 
+COPY qemu-@@ARCH_2@@-static /usr/bin/
+
 RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get -y install curl tar libncurses5-dev libgmp-dev libdb-dev && \
