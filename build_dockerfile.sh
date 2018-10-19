@@ -4,16 +4,16 @@ case $ARCH in
           go_arch="386"
           ;;
     amd64) qemu_arch="x86_64" 
-          go_arch=$ARCH
+           go_arch=$ARCH
           ;;
     arm32v7) qemu_arch="arm" 
-          go_arch="arm"
+             go_arch="arm"
           ;;
     arm64v8) qemu_arch="aarch64" 
-          go_arch="arm64"
+             go_arch="arm64"
           ;;
     ppc64el) qemu_arch="ppc64le" 
-          go_arch="ppc64le"
+             go_arch="ppc64le"
           ;;
     *) qemu_arch=$ARCH
        go_arch=$ARCH
