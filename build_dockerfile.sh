@@ -20,6 +20,6 @@ case $ARCH in
 esac
 
 sed s/"@@ARCH@@"/"$ARCH"/g Dockerfile > Dockerfile.$ARCH
-sed s/"@@QEMU_ARCH@@"/"$qemu_arch"/g Dockerfile > Dockerfile.$ARCH
+sed -i s/"@@QEMU_ARCH@@"/"$qemu_arch"/g Dockerfile.$ARCH
 sed -i s/"@@GO_ARCH@@"/"$go_arch"/g Dockerfile.$ARCH
 
