@@ -12,12 +12,21 @@ sudo service docker restart
 
 #Repair binfmt-support
 case $ARCH in
-    i386) target_arch="386" 
+    i386) qemu_arch=$ARCH 
+          go_arch="386"
           ;;
-    arm32v7) target_arch="arm"
-           ;;
-    arm64v8) target_arch="arm64"
-             ;;
+    amd64) qemu_arch="x86_64" 
+          go_arch=$ARCH
+          ;;
+    arm32v7) qemu_arch="arm" 
+          go_arch="arm"
+          ;;
+    arm64v8) qemu_arch="aarch64" 
+          go_arch="arm64"
+          ;;
+    ppc64el) qemu_arch="ppc64le" 
+          go_arch="ppc64le"
+          ;;
     *) goarch=$ARCH
        ;;
 esac
@@ -28,8 +37,8 @@ sudo mkdir -p /lib/binfmt.d
 sudo cp qemu-static-conf/*.conf /lib/binfmt.d/
 
 # download latest qemu-static-files
-wget https://github.com/multiarch/qemu-user-static/releases/download/v3.0.0/x86_64_qemu-${goarch}-static.tar.gz
-tar -xvf x86_64_qemu-${target_arch}-static.tar.gz
+wget -N https://github.com/multiarch/qemu-user-static/releases/download/v3.0.0/x86_64_qemu-${qemu_arch}-static.tar.gz
+tar -xvf x86_64_qemu-${qemu_arch}-static.tar.gz
 
 sudo /etc/init.d/binfmt-support restart
 sudo cat /proc/sys/fs/binfmt_misc/status

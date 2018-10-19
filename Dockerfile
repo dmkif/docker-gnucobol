@@ -3,7 +3,7 @@ MAINTAINER Daniel Mulzer <daniel.mulzer@fau.de>
 # Install packages necessary to build and run gnucobol
 USER root
 
-COPY qemu-@@ARCH_2@@-static /usr/bin/
+COPY qemu-@@QEMU_ARCH@@-static /usr/bin/
 
 RUN apt-get update && \
     apt-get -y upgrade && \

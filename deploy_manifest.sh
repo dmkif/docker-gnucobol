@@ -18,18 +18,27 @@ for platform in $ARCH
 do
 #annotate manifest with correct arch
 case $ARCH in
-    i386) goarch="386" 
+    i386) qemu_arch=$ARCH 
+          go_arch="386"
           ;;
-    arm32v7) goarch="arm"
-           ;;
-    arm64v8) goarch="arm64"
-             ;;
+    amd64) qemu_arch="x86_64" 
+          go_arch=$ARCH
+          ;;
+    arm32v7) qemu_arch="arm" 
+          go_arch="arm"
+          ;;
+    arm64v8) qemu_arch="aarch64" 
+          go_arch="arm64"
+          ;;
+    ppc64el) qemu_arch="ppc64le" 
+          go_arch="ppc64le"
+          ;;
     *) goarch=$ARCH
        ;;
 esac
 
    
-docker manifest annotate --arch=$goarch $manifestname $REPO:$platform-$TRAVIS_BUILD_NUMBER
+docker manifest annotate --arch=$go_arch $manifestname $REPO:$platform-$TRAVIS_BUILD_NUMBER
 done;
 
 docker manifest inspect "${REPO}:${PUBTAG}"
