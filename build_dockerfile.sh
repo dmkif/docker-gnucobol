@@ -15,7 +15,8 @@ case $ARCH in
     ppc64el) qemu_arch="ppc64le" 
           go_arch="ppc64le"
           ;;
-    *) goarch=$ARCH
+    *) qemu_arch=$ARCH
+       go_arch=$ARCH
        ;;
 esac
 
