@@ -17,12 +17,14 @@ docker manifest create $manifeststring
 for platform in $ARCH
 do
 #annotate manifest with correct arch
-case $platform in
-    i386) goarch="386"
+case $ARCH in
+    i386) goarch="386" 
           ;;
-    armhf) goarch="arm"
+    arm32v7) goarch="arm"
            ;;
-    *) goarch=$platform
+    arm64v8) goarch="arm64"
+             ;;
+    *) goarch=$ARCH
        ;;
 esac
 
