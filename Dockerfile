@@ -1,4 +1,4 @@
-FROM @@ARCH@@/debian:stable-backports
+FROM @@ARCH@@/golang:latest
 MAINTAINER Daniel Mulzer <daniel.mulzer@fau.de>
 # Install packages necessary to build and run gnucobol
 USER root
