@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e;
 #Login to DockerHub 
 echo "$DOCKER_PASSWORT" | docker login -u "$DOCKER_USER" --password-stdin
 manifestname="$REPO:$PUBTAG"
@@ -6,23 +7,29 @@ manifeststring=$manifestname
 
 for platform in $ARCH
 do
-echo $platform
-#get latest image
-docker pull $REPO:$platform-$TRAVIS_BUILD_NUMBER
-#build manifest
-manifeststring="$manifeststring $REPO:$platform-$TRAVIS_BUILD_NUMBER"
+    echo "Performing Architecture: ${platform}";
+    #get latest image
+    echo "Pulling latest Image from Dockerhub with tag ${REPO}:${platform}-${TRAVIS_BUILD_NUMBER}"
+    docker pull $REPO:$platform-$TRAVIS_BUILD_NUMBER
+   #build manifest
+   manifeststring="$manifeststring $REPO:$platform-$TRAVIS_BUILD_NUMBER";
 done;
 
-docker manifest create $manifeststring
+echo "Generating manifest with String: ${manifeststring}"
+docker manifest create $manifeststring;
+
+#clean platform var
+platform="";
 for platform in $ARCH
 do
 #annotate manifest with correct arch
-case $ARCH in
-    i386) qemu_arch=$ARCH 
+echo "platform: $platform"
+case $platform in
+    i386) qemu_arch=$platform 
           go_arch="386"
           ;;
     amd64) qemu_arch="x86_64" 
-           go_arch=$ARCH
+           go_arch=$platform
           ;;
     arm32v7) qemu_arch="arm" 
              go_arch="arm"
@@ -33,15 +40,17 @@ case $ARCH in
     ppc64el) qemu_arch="ppc64le" 
              go_arch="ppc64le"
           ;;
-    *) qemu_arch=$ARCH
-       go_arch=$ARCH
+    *) qemu_arch=$platform
+       go_arch=$platform
        ;;
 esac
 
-   
-docker manifest annotate --arch=$go_arch $manifestname $REPO:$platform-$TRAVIS_BUILD_NUMBER
+    echo "Annotating Manifest with ARCH:${go_arch} NAME:${manifestname} $REPO:$platform-$TRAVIS_BUILD_NUMBER";   
+    docker manifest annotate --arch=$go_arch $manifestname $REPO:$platform-$TRAVIS_BUILD_NUMBER;
 done;
 
+echo "Created manifest:"
 docker manifest inspect "${REPO}:${PUBTAG}"
+echo "Push manifest:"
 docker manifest push -p "${REPO}:${PUBTAG}"
 docker logout
