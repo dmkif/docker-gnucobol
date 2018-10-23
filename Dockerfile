@@ -1,4 +1,4 @@
-FROM @@ARCH@@/golang:latest
+FROM @@ARCH@@/golang:stretch
 MAINTAINER Daniel Mulzer <daniel.mulzer@fau.de>
 # Install packages necessary to build and run gnucobol
 USER root
